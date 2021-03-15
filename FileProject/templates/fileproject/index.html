@@ -1,0 +1,38 @@
+{% extends 'fileproject/layout.html' %}
+{% block title %} ShareX {% endblock %}
+{% block body %}
+{% load static %}
+<header>
+
+    <div class="container">
+        <nav class="navbar">
+            <a href="{% url 'index' %}" class="logo">ShareX</a>
+            <ul class="nav-links">
+                {% if request.user.is_authenticated %}
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'main' %}">Dashboard</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                {% else %}
+                <button><a href="{% url 'login' %}"> Sign In</a></button>
+                <button><a href="{% url 'register' %}">Sign Up</a></button>
+                {% endif %}
+            </ul>
+            <i class="fas fa-bars fa-2x" id="burger"></i>
+        </nav>
+        <section class="showcase">
+            <h1>ShareX is File Sharing Hub!</h1>
+            <p>Whether you’re sharing photos, videos, audio, or docs, ShareX can simplify your workflow. A file storage and sharing tool, ShareX provides 10GB storage space for free and a 4GB file upload limit.</p>
+            <p>
+                After uploading your files, you can then easily share through email, link, or any social network.
+            </p>
+            <a href="{% url 'main' %}"><button>Upload Files</button></a>
+        </section>
+    </div>
+
+    <div class="video-container">
+        <!-- <video src="https://storage.coverr.co/videos/GK300Fvvg4T1LYiC9SJpUAK36CDldcR7A?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6Ijg3NjdFMzIzRjlGQzEzN0E4QTAyIiwiaWF0IjoxNjE0NzE0NjcxfQ.EnOnRFM1w-1SJY_AfEhhjR6S_dPgXx0lj1kKMvZheTk" autoplay loop muted></video> -->
+        <video src="{% static 'fileproject/video/blue.mp4' %}" autoplay loop muted></video>
+    </div>
+
+</header>
+{% endblock %}

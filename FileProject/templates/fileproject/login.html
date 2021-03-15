@@ -1,0 +1,33 @@
+{% extends 'fileproject/layout.html' %}
+{% load static %}
+{% block title %} Login {% endblock %}
+{% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<div class="login-body">
+    {% if message %}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+         <strong>{{message}}</strong>
+      </div>
+    {% endif %}
+<div class='form-register'>
+    <form action="{% url 'login' %}" method="POST">
+        {% csrf_token %}
+      <h1>Log in</h1>
+      <input class='first' name="username" type='text' placeholder='Enter Username'>
+      <span class='err-one'>Please fill username input</span>
+      
+      <input class='second' name="password" type='password' placeholder='Enter Password'>
+      <span class='err-two'>Please fill password input</span>
+      <div class="group m20">
+        <a href="{% url 'register' %}" class="link">Don't have an account ?</a>
+       </div>
+           
+      <button class='btn'><i class='fa fa-user-plus'></i> Log in</button>
+    </form>
+  </div>
+</div>
+<script src="{% static 'fileproject/javascript/auth.js' %}">
+  
+</script>
+{% endblock %}

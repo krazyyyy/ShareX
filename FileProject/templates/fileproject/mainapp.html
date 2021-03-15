@@ -1,0 +1,163 @@
+{% extends 'fileproject/layout.html' %}
+{% load static %}
+{% load sizify  %}
+{% block title %} Main {% endblock %}
+{% block body %}
+{% if user.is_anonymous %}
+<div  style="margin: 0;" class="alert alert-warning" role="alert">
+  This is a light alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+{% endif %}
+<div class="main_body">
+<link href="https://fonts.googleapis.com/css?family=DM+Sans:400,500,700&display=swap" rel="stylesheet">
+<div class="app-container">
+  <div class="left-area">
+    <button class="btn-close-left">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-x-circle" viewBox="0 0 24 24">
+        <defs/>
+        <circle cx="12" cy="12" r="10"/>
+        <path d="M15 9l-6 6M9 9l6 6"/>
+      </svg>
+    </button>
+    <div class="app-name">MyDocs</div>
+    
+      <a class="item-link hidden" id="hide_left">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </a>
+    
+    <a class="item-link" href="{% url 'index' %}" id="pageLink">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+      </svg>
+    </a>
+    <a id="page" class="item-link" >
+      <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-folder" viewBox="0 0 24 24">
+        <defs />
+        <path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z" />
+      </svg>
+    </a>
+    <a id="uploads" class="item-link" id="pageLink">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+            <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3z"/>
+          </svg>
+    </a>
+    {% if user.is_authenticated %}
+    <button class="btn-logout">
+        <a href="{% url 'logout' %}">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-log-out" viewBox="0 0 24 24">
+        <defs/>
+        <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/>
+    </svg>
+    </a>
+    </button>
+    {% endif %}
+  </div>
+  <div class="main-area">
+    
+    <button class="btn-show-left-area" id="show_left">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <div class="main-area-header">
+      <div class="search-wrapper" id="searchLine">
+      <input onkeyup="Search()" id="myInput" class="search-input" type="text" placeholder="e.g. files.doc">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="feather feather-search" viewBox="0 0 24 24">
+        <defs/>
+        <circle cx="11" cy="11" r="8"/>
+        <path d="M21 21l-4.35-4.35"/>
+      </svg>
+    </div>
+    </div>
+    
+    <section id="allFiles" class="content-section">
+      <div class="section-header-wrapper">
+        <h1 class="section-header">Recent Files</h1>
+        <a class="section-header-link">
+          View all files
+        </a>
+      </div>
+      
+      <div class="files-table" id="myTable">
+        <div class="files-table-header">
+          <div class="column-header table-cell">Name</div>
+          <div class="column-header table-cell size-cell">Size</div>
+          <div class="column-header table-cell">Upload Date</div>
+          <div class="column-header table-cell">Action</div>
+        </div>
+        {% for f in files %}
+        <div class="files-table-row">
+          <div class="table-cell name-cell pdf"> <a class="search_cells" href="{% url 'download' f.id %}" target="blank_">{{ f.name_ }}</a></div>
+          <div class="table-cell size_cell">
+            {% if f.upload %}
+              {{ f.upload.size|sizify }}
+            {% else %}
+              0
+            {% endif %}
+            </div>
+          <div class="table-cell">{{ f.uploaded_at }}</div>
+          <div class="table-cell action-cell">
+            <a href="{% url 'delete' f.id %}"><i class="material-icons">delete</i></a>
+            <a href="{{f.upload.url}}" download><i class="material-icons">cloud_download</i></a>
+            {% if f.encryption == True %}
+              <a href="{% url 'dec' f.id %}" ><i class="material-icons">lock_open</i></a>
+            {% else %}
+              <a href="{% url 'enc' f.id %}" ><i class="material-icons">lock</i></a>
+            {% endif %}
+              <!-- <input type="button" value="{% url 'download' f.id %}" onclick="Copy();" /><i class="material-icons">share</i></a> -->
+          </div>
+        </div>
+        {% empty %}
+        <h2>No Item Yet!</h2>
+        {% endfor %}
+        
+      </div>
+    </section>
+  
+
+  
+  
+
+
+  <section id="uploadSection" class="content-section">
+      <div class="section-header-wrapper">
+          <h1 class="section-header">Upload Files</h1>
+          
+            
+        </div>
+        <div class="upload-btn-wrapper">
+          
+          <form id="uploadForm" enctype="multipart/form-data" method='POST' action="{% url 'upload' %}">
+              {% csrf_token %}
+              <div class="form-group">
+                <label for="file-upload" class="custom-file-upload">
+                  <i class="fa fa-cloud-upload"></i> Upload File
+                </label>
+                <input id="file-upload" name='myfile' type="file" style="display:none;">
+            </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" name="encrypted" class="custom-control-input" id="customCheck1">
+            <label class="custom-control-label" for="customCheck1">Encrypted</label>
+          </div>
+            
+              <button type="submit" class="btn btn-primary mb-2">Start</button>
+            
+            </form>
+          </div>
+  </section>
+</div>
+</div>
+</div>
+</div>
+
+
+<script src="{% static 'fileproject/javascript/main.js' %}">
+</script>
+<script>
+  
+  $('#file-upload').change(function() {
+  var i = $(this).prev('label').clone();
+  var file = $('#file-upload')[0].files[0].name;
+  $(this).prev('label').text(file);
+});
+</script>
+{% endblock %}

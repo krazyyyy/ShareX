@@ -1,0 +1,38 @@
+{% extends 'fileproject/layout.html' %}
+{% load static %}
+{% block title %} Registeration {% endblock %}
+{% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<div class="login-body">
+    {% if message %}
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        
+        <strong>{{message}}</strong>
+      </div>
+    {% endif %}
+    
+<div class='form-register'>
+    <form action="{% url 'register' %}" method="POST">
+        {% csrf_token %}
+      <h1>Fill your informations To Sign Up</h1>
+      <input class='first' required name="username" type='text' placeholder='Enter Username'>
+      <span class='err-one'>Please fill username input</span>
+      
+      <input required class='second' name="password" type='password' placeholder='Enter Password'>
+      <span class='err-two'>Please fill password input</span>
+      
+      <input class='third' required name="confirmation" type='password' placeholder='Confirm password'>
+      <span class='err-three'>Confirm your password</span>
+      
+      <input class='forth' required name="email" type='email' placeholder='Enter email'>
+      <span class='err-four'>Please fill email input</span><br>
+      <div class="group m20">
+        <a href="{% url 'login' %}" class="link">Already have an account ?</a>
+       </div>      
+      <button class='btn'><i class='fa fa-user-plus'></i> Create my account</button>
+    </form>
+  </div>
+</div>
+<script src="{% static 'fileproject/javascript/auth.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'fileproject/layout.html' %}
+{% block title %} Download - {{ files.name_ }}{% endblock %}
+{% block body %}
+{% load sizify %}
+<div class="container_body">
+  
+  
+<div class="container_download noselect center" id="container">
+  <button class="button fill-container center" id="button"><a href="{{ files.upload.url }}" download> DOWNLOAD</a>{{ files.upload.size | sizify}}</button>
+</div>
+</div>
+
+
+
+{% endblock %}
