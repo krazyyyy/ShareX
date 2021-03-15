@@ -88,8 +88,12 @@ WSGI_APPLICATION = 'FileShare.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'FileSharing',
+        'USER': 'krazy',
+        'PASSWORD': 'python123',
+        'HOST': 'mysql-23496-0.cloudclusters.net',
+        'PORT': '23496',
     }
 }
 
