@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django_cryptography.fields import encrypt
 import random
 import string
 import os
