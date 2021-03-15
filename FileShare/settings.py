@@ -56,11 +56,6 @@ MIDDLEWARE = [
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 
-FILE_UPLOAD_HANDLERS = [
-    "encrypted_files.uploadhandler.EncryptedFileUploadHandler",
-    "django.core.files.uploadhandler.MemoryFileUploadHandler",
-    "django.core.files.uploadhandler.TemporaryFileUploadHandler"
-]
 
 ROOT_URLCONF = 'FileShare.urls'
 DEFF_SALT = "SALT"
